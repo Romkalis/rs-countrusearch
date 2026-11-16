@@ -1,0 +1,42 @@
+{
+  "name": "countrysearch",
+  "version": "1.0.0",
+  "description": "Live country search with debounce and AbortController",
+  "lint-staged": {
+    "*.{js,ts,mts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,md,json,html}": [
+      "prettier --write"
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "rs-countrusearch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/css": "^2.0.1",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.14.0",
+    "husky": "^9.1.7",
+    "jiti": "^2.7.0",
+    "lint-staged": "^17.6.1",
+    "prettier": "^3.10.1",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
+  },
+  "type": "module"
+}

@@ -1,4 +1,4 @@
-import { getCountryCardField } from '../lib/getCountryCardField.js';
+import { mapCountryResponse } from '../lib/mapCountryResponse.js';
 import type { CountryResponse } from '../types/countryResponse.type.js';
 import { el, formatNumber, orDash } from './dom.js';
 
@@ -13,7 +13,7 @@ export function renderCard(
   country: CountryResponse,
   onOpen: (country: CountryResponse) => void,
 ): HTMLElement {
-  const card = getCountryCardField(country);
+  const card = mapCountryResponse(country);
 
   const button = el(
     'button',

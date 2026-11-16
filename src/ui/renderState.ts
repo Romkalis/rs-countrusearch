@@ -8,7 +8,6 @@ export type RenderHandlers = {
   onOpen: (country: CountryResponse) => void;
 };
 
-/** Returns the nodes for the results area for a given search state. */
 export function renderState(
   state: SearchState,
   { onRetry, onOpen }: RenderHandlers,

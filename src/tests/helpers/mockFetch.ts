@@ -1,8 +1,3 @@
-/**
- * A fetch double that behaves like the real one with respect to abort:
- * it rejects with `signal.reason` (AbortError / TimeoutError DOMException)
- * as soon as the signal passed in `init` is aborted.
- */
 export function abortableResponse(
   init: RequestInit | undefined,
   response: Response | null,

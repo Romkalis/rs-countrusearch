@@ -6,14 +6,6 @@ export const DEFAULT_TIMEOUT_MS = 8000;
 
 export type SearchOptions = { timeoutMs?: number };
 
-/**
- * Fetches countries whose name matches `query`.
- *
- * - 404 means "no matches" and resolves to `[]`.
- * - Other non-OK statuses throw `HttpError`.
- * - The caller's `signal` (AbortError) and an internal timeout (TimeoutError)
- *   are combined, so both really cancel the HTTP request.
- */
 export async function searchCountries(
   query: string,
   signal: AbortSignal,

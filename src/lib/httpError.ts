@@ -1,4 +1,3 @@
-/** Non-OK HTTP response (except 404, which means "no matches"). */
 export class HttpError extends Error {
   readonly status: number;
 

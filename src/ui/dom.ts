@@ -4,7 +4,6 @@ type Props = {
   attrs?: Record<string, string>;
 };
 
-/** Small createElement helper: no innerHTML, text is always escaped. */
 export function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   { className, text, attrs = {} }: Props = {},

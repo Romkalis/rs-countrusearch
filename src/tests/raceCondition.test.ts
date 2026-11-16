@@ -15,8 +15,6 @@ describe('race condition: stale responses', () => {
   });
 
   it('shows only the latest query even if an earlier request would resolve later', async () => {
-    // "uk" is slow (1000ms), "pol" is fast (50ms): without cancellation
-    // the "uk" response would arrive last and overwrite "pol".
     const latency: Record<string, number> = { uk: 1000, pol: 50 };
     const signals: Record<string, AbortSignal> = {};
     const fetchMock = vi.fn((url: string, init?: RequestInit) => {
@@ -35,9 +33,9 @@ describe('race condition: stale responses', () => {
     });
 
     controller.setQuery('uk');
-    await vi.advanceTimersByTimeAsync(DELAY); // "uk" request in flight
-    controller.setQuery('pol'); // must abort "uk" right away
-    await vi.advanceTimersByTimeAsync(DELAY + 2000); // let everything settle
+    await vi.advanceTimersByTimeAsync(DELAY);
+    controller.setQuery('pol');
+    await vi.advanceTimersByTimeAsync(DELAY + 2000);
 
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(signals['uk']!.aborted).toBe(true);

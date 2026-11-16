@@ -12,7 +12,6 @@ function buildDescription(raw: CountryResponse): string {
   return `${raw.name} (${raw.nativeName}) is located in ${raw.subregion}, ${raw.region}. Its people are called ${raw.demonym}.`;
 }
 
-/** Pure mapper: raw API country -> fields shown in the detail view. */
 export function getCountryDetails(rawData: CountryResponse): CountryDetails {
   return {
     name: rawData.name,

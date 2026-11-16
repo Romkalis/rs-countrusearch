@@ -23,10 +23,6 @@ export type SearchController = {
 
 export const DEFAULT_DEBOUNCE_MS = 300;
 
-/**
- * DOM-independent search logic: debounce + real cancellation + state machine.
- * The UI only calls `setQuery` / `retry` and renders whatever `onChange` gives.
- */
 export function createSearchController({
   onChange,
   search = searchCountries,
@@ -70,7 +66,6 @@ export function createSearchController({
   }
 
   const debouncedRun = debounce((query: string) => {
-    // Input may have changed (e.g. cleared) after this call was scheduled.
     if (query === latestQuery) void run(query);
   }, delay);
 
@@ -79,7 +74,6 @@ export function createSearchController({
       const query = rawQuery.trim();
       if (query === latestQuery && state.status !== 'idle') return;
       latestQuery = query;
-      // Cancel right away: a stale request must not wait for the debounce.
       abortInFlight();
 
       if (query === '') {

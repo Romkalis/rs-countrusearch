@@ -2,7 +2,6 @@ import { debounce } from '../utils/debounce';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 describe('debounce', () => {
-  //включаем фейковые таймеры для всех тестов, чтобы не ждать реального таймера
   beforeEach(() => vi.useFakeTimers());
 
   it("callback wasn't call immediately", () => {
@@ -62,6 +61,5 @@ describe('debounce', () => {
     expect(spy).toHaveBeenCalledWith('it');
   });
 
-  //вЫключаем фейковые таймеры
   afterEach(() => vi.useRealTimers());
 });

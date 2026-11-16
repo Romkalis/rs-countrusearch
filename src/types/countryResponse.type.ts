@@ -11,7 +11,6 @@ export type Language = {
   nativeName?: string;
 };
 
-/** Raw country object as returned by https://countries.dev/name/{query}. */
 export type CountryResponse = {
   name: string;
   nativeName: string;

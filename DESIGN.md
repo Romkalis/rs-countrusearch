@@ -61,9 +61,8 @@ enough to feel live.
 
 ## 3. Complexity
 
-[`getCountryCardField`](src/lib/getCountryCardField.ts) and
-[`getCountryDetails`](src/lib/getCountryDetails.ts) (the task's
-`mapCountryResponse`): for one country, time is **O(L + C)**, where L is the
+[`mapCountryResponse`](src/lib/mapCountryResponse.ts) and
+[`getCountryDetails`](src/lib/getCountryDetails.ts): for one country, time is **O(L + C)**, where L is the
 number of languages and C is the number of currencies. Each list is mapped
 once, and every other field is an O(1) copy. Mapping a whole response of N
 countries is **O(N · (L + C))**, which is effectively O(N) because L and C are
@@ -82,7 +81,7 @@ The input is never mutated, and this is covered by a test.
     cancellation, with no DOM.
   - `ui/*` turns state into DOM.
   - `main.ts` only wires these pieces together.
-- **Pure functions:** `getCountryCardField`, `getCountryDetails`,
+- **Pure functions:** `mapCountryResponse`, `getCountryDetails`,
   `classifyError` and `renderState` (input → output, no hidden state) are easy
   to test with fixtures (`src/tests/fixtures/*.json`).
 - **Explicit state instead of flags:** `SearchState`

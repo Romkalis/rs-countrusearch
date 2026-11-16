@@ -71,6 +71,27 @@ The input is never mutated, and this is covered by a test.
 
 `debounce`: O(1) per call (clear one timer, set one timer).
 
+**Cache and deduplication (bonus):**
+[`createCachedSearch`](src/lib/cachedSearch.ts) keeps two `Map`s keyed by the
+normalised query (trimmed, lower-case): `cache` for finished results and
+`inFlight` for requests in progress.
+
+- Lookup, insert and delete are **O(1)** on average (hash map). Normalising the
+  key is O(k) for a query of length k.
+- A cache hit resolves without any network request.
+- A duplicate query while a request is in flight reuses the same promise, so N
+  identical callers make 1 request. Each caller gets its own wrapper promise
+  with its own `AbortSignal`, so cancelling is O(1) per caller. The real request
+  is aborted only when the last subscriber leaves, so one caller cancelling
+  never breaks the shared promise for the others.
+- Errors and aborted requests are not cached.
+- Memory is **O(Q · R)**, where Q is the number of distinct queries and R is
+  the response size. The cache lives only for the page session, which is fine
+  for a demo. A real app would add a TTL or LRU limit.
+
+[`createSearchHistory`](src/lib/searchHistory.ts) stores at most 10 entries, so
+`add` (deduplicate, prepend, slice) is O(limit), effectively O(1).
+
 ## 4. Clean-code principles applied
 
 - **Single responsibility / separation of concerns:**
@@ -90,8 +111,9 @@ The input is never mutated, and this is covered by a test.
   `renderState` uses an exhaustive `switch`, so impossible combinations such as
   "loading and error at the same time" cannot be represented.
 - **Dependency injection:** `createSearchController({ search, delay })` accepts
-  the search function. Tests pass mocks, and the app uses the real
-  `searchCountries`.
+  the search function. Tests pass mocks, and the app uses
+  `createCachedSearch(searchCountries)`. `createSearchHistory(storage)` takes
+  any `Storage`-like object, so it is tested with an in-memory store.
 - **Meaningful errors:** `HttpError` ([`lib/httpError.ts`](src/lib/httpError.ts))
   carries a `status` and a `name`. 404 is treated as data (an empty list), not as
   an error.

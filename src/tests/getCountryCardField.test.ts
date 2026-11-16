@@ -34,6 +34,6 @@ describe('get essential fields from response', () => {
     expect(getCountryCardField(mockData)).toEqual(expectedFields)
   })
   it('if received empty languages array', () => {
-    expect(getCountryCardField({...mockData, languages: []})).toEqual({...expectedFields, languages: ''})
+    expect(getCountryCardField({...mockData, languages: []})).toEqual({...expectedFields, languages: []})
   })
 });

@@ -4,6 +4,6 @@ export type CardFields = {
     capital: string;
     region: string;
     population: number;
-    languages: string[] | '',
+    languages: string[] | [],
     flag: string;
 }

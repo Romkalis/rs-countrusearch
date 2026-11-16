@@ -8,7 +8,7 @@ export function getCountryCardField(rawData: CountryResponse): CardFields {
     capital: rawData.capital,
     region: rawData.region,
     population: rawData.population,
-    languages: rawData.languages.map((lang) => lang.name) || '',
+    languages: rawData.languages.map((lang) => lang.name),
     flag: rawData.flag,
   };
 }

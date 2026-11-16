@@ -1,9 +1,9 @@
-type Currency = {
+export type Currency = {
   code: string;
   name: string;
   symbol: string;
 };
-type Language = {
+export type Language = {
   iso639_1: string;
   name: string;
 };

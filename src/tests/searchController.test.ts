@@ -162,4 +162,36 @@ describe('createSearchController', () => {
     expect(search).toHaveBeenLastCalledWith('ukr', expect.any(AbortSignal));
     expect(controller.getState().status).toBe('success');
   });
+
+  it('searchNow runs a query immediately without waiting for debounce', async () => {
+    const { controller, search } = setup();
+
+    controller.searchNow(' japan ');
+    await vi.advanceTimersByTimeAsync(0);
+
+    expect(search).toHaveBeenCalledWith('japan', expect.any(AbortSignal));
+    expect(controller.getState()).toMatchObject({
+      status: 'success',
+      query: 'japan',
+    });
+  });
+
+  it('searchNow cancels a pending debounced query and the request in flight', async () => {
+    const signals: AbortSignal[] = [];
+    const search = vi.fn<SearchFn>(
+      (_q, signal) =>
+        new Promise<CountryResponse[]>(() => signals.push(signal)),
+    );
+    const { controller } = setup(search);
+
+    controller.setQuery('ukr');
+    await vi.advanceTimersByTimeAsync(DELAY);
+    controller.setQuery('pol');
+    controller.searchNow('japan');
+    await vi.advanceTimersByTimeAsync(DELAY);
+
+    expect(signals[0]!.aborted).toBe(true);
+    expect(search).toHaveBeenCalledTimes(2);
+    expect(search).toHaveBeenLastCalledWith('japan', expect.any(AbortSignal));
+  });
 });

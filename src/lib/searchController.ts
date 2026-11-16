@@ -17,6 +17,7 @@ export type SearchControllerOptions = {
 
 export type SearchController = {
   setQuery: (rawQuery: string) => void;
+  searchNow: (rawQuery: string) => void;
   retry: () => void;
   getState: () => SearchState;
 };
@@ -82,6 +83,7 @@ export function createSearchController({
       }
       debouncedRun(query);
     },
+    searchNow() {},
     retry() {
       if (latestQuery !== '') void run(latestQuery);
     },

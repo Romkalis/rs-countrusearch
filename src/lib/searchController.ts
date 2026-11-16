@@ -83,7 +83,16 @@ export function createSearchController({
       }
       debouncedRun(query);
     },
-    searchNow() {},
+    searchNow(rawQuery) {
+      const query = rawQuery.trim();
+      latestQuery = query;
+      if (query === '') {
+        abortInFlight();
+        setState({ status: 'idle' });
+        return;
+      }
+      void run(query);
+    },
     retry() {
       if (latestQuery !== '') void run(latestQuery);
     },

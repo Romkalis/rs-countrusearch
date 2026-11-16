@@ -212,3 +212,39 @@ body {
 .details__list dd {
   margin: 0;
 }
+
+.history {
+  margin-top: 12px;
+}
+
+.history__title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.history__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history__item {
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.history__item:hover,
+.history__item:focus-visible {
+  border-color: var(--accent);
+}

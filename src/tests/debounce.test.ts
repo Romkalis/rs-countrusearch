@@ -36,7 +36,7 @@ describe('debounce', () => {
     expect(spy).toHaveBeenCalledTimes(3);
   });
 
-  it('few shot call give only one call', () => {
+  it('a few calls give only one call', () => {
     const spy = vi.fn();
     const debouncedSpy = debounce(spy, 300);
 

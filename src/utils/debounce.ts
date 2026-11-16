@@ -1,7 +1,9 @@
-type Callback = (...args: unknown[]) => void;
+export function debounce<T>(cb: (...args: T[]) => void, delay: number): (...args: T[]) => void {
 
-export function debounce(cb: Callback, delay: number): Callback {
-  return (...args: unknown[]) => {
-    // todo fn
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  return (...args: T[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => cb(...args), delay)
   }
 }
